@@ -1,5 +1,6 @@
 package com.alastor.vehiclereport.repository.roomdatabase;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -15,8 +16,8 @@ import io.reactivex.Observable;
 public interface CategoryDao {
 
     @Query("SELECT * FROM category")
-    Observable<List<Category>> getCategories();
+    LiveData<List<Category>> getCategories();
 
     @Insert
-    Completable insertAll(Category... categories);
+    void insertAll(Category... category);
 }
