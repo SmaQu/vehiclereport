@@ -8,17 +8,19 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.alastor.vehiclereport.repository.roomdatabase.dao.CategoryDao;
+import com.alastor.vehiclereport.repository.roomdatabase.dao.ReportDao;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Reports;
+import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Category.class, Reports.class}, version = 1, exportSchema = false)
+@Database(entities = {Category.class, Report.class}, version = 1, exportSchema = false)
 public abstract class VehicleReportDatabase extends RoomDatabase {
 
     public abstract CategoryDao categoryDao();
 
-    public abstract ReportsDao reportsDao();
+    public abstract ReportDao reportsDao();
 
     private static VehicleReportDatabase INSTANCE;
 

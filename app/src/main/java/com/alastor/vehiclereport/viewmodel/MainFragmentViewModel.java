@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alastor.vehiclereport.repository.CategoryRepository;
+import com.alastor.vehiclereport.repository.Response;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class MainFragmentViewModel extends AndroidViewModel {
     public LiveData<Response<List<Category>>> getCategories() {
         final Observable<List<Category>> observable = categoryRepository.getCategory();
 
+        //TODO add fetch number of elements & last edit time
         observable
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<Category>>() {

@@ -9,10 +9,9 @@ import androidx.room.PrimaryKey;
 @Entity(foreignKeys = @ForeignKey(entity = Category.class,
         parentColumns = "id",
         childColumns = "category_id"))
-public class Reports {
+public class Report {
 
     @PrimaryKey
-    @NonNull
     private long id;
 
     private String title;

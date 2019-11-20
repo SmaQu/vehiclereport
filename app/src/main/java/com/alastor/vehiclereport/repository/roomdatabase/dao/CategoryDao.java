@@ -1,4 +1,4 @@
-package com.alastor.vehiclereport.repository.roomdatabase;
+package com.alastor.vehiclereport.repository.roomdatabase.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

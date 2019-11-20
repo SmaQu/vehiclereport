@@ -1,11 +1,11 @@
-package com.alastor.vehiclereport.viewmodel;
+package com.alastor.vehiclereport.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.alastor.vehiclereport.viewmodel.Response.Status.ERROR;
-import static com.alastor.vehiclereport.viewmodel.Response.Status.LOADING;
-import static com.alastor.vehiclereport.viewmodel.Response.Status.SUCCESS;
+import static com.alastor.vehiclereport.repository.Response.Status.ERROR;
+import static com.alastor.vehiclereport.repository.Response.Status.LOADING;
+import static com.alastor.vehiclereport.repository.Response.Status.SUCCESS;
 
 
 public class Response<T> {

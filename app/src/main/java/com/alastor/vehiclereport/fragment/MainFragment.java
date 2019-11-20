@@ -53,7 +53,6 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onStop() {
         super.onStop();
