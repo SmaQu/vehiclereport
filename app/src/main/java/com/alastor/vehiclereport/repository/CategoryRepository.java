@@ -2,13 +2,13 @@ package com.alastor.vehiclereport.repository;
 
 import android.app.Application;
 
-import androidx.lifecycle.LiveData;
-
 import com.alastor.vehiclereport.repository.roomdatabase.CategoryDao;
 import com.alastor.vehiclereport.repository.roomdatabase.VehicleReportDatabase;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 public class CategoryRepository {
 
@@ -19,7 +19,7 @@ public class CategoryRepository {
         categoryDao = vehicleReportDatabase.categoryDao();
     }
 
-    public LiveData<List<Category>> getCategory() {
+    public Observable<List<Category>> getCategory() {
         return categoryDao.getCategories();
     }
 }
