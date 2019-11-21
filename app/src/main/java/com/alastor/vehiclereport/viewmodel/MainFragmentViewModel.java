@@ -24,7 +24,7 @@ public class MainFragmentViewModel extends AndroidViewModel {
     private CompositeDisposable disposable = new CompositeDisposable();
     private CategoryRepository categoryRepository;
 
-    //liveadata
+    //live-data
     private MutableLiveData<Response<List<Category>>> categories = new MutableLiveData<>();
 
     public MainFragmentViewModel(@NonNull Application application) {

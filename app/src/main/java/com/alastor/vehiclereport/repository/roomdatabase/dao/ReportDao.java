@@ -16,6 +16,7 @@ import io.reactivex.Single;
 
 @Dao
 public interface ReportDao {
+
     @Query("SELECT * FROM report WHERE category_id LIKE :categoryId")
     Observable<List<Report>> getReports(String categoryId);
 

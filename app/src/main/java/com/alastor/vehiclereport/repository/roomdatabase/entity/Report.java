@@ -1,6 +1,5 @@
 package com.alastor.vehiclereport.repository.roomdatabase.entity;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -11,7 +10,7 @@ import androidx.room.PrimaryKey;
         childColumns = "category_id"))
 public class Report {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     private String title;
