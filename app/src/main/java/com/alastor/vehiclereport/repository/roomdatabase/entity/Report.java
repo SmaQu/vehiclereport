@@ -17,11 +17,8 @@ public class Report {
 
     private String description;
 
-    @ColumnInfo(name = "create_timestamp")
-    private long createTimestamp;
-
-    @ColumnInfo(name = "edit_timestamp")
-    private long editTimestamp;
+    @ColumnInfo(name = "execution_timestamp")
+    private long executionTimestamp;
 
     private float cost;
 
@@ -52,20 +49,12 @@ public class Report {
         this.description = description;
     }
 
-    public long getCreateTimestamp() {
-        return createTimestamp;
+    public long getExecutionTimestamp() {
+        return executionTimestamp;
     }
 
-    public void setCreateTimestamp(long createTimestamp) {
-        this.createTimestamp = createTimestamp;
-    }
-
-    public long getEditTimestamp() {
-        return editTimestamp;
-    }
-
-    public void setEditTimestamp(long editTimestamp) {
-        this.editTimestamp = editTimestamp;
+    public void setExecutionTimestamp(long executionTimestamp) {
+        this.executionTimestamp = executionTimestamp;
     }
 
     public float getCost() {

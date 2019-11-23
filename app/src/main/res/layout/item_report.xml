@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_execution_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_dimen"
+        android:layout_marginTop="@dimen/default_dimen"
+        android:layout_marginEnd="@dimen/small_dimen"
+        android:layout_marginBottom="@dimen/small_dimen"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_small_dimen"
+        app:layout_constraintEnd_toStartOf="@id/view_execution_date_cost_separator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="23/23/2324" />
+
+    <View
+        android:id="@+id/view_execution_date_cost_separator"
+        android:layout_width="@dimen/default_dimen"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/text_execution_date"
+        app:layout_constraintEnd_toStartOf="@+id/text_cost"
+        app:layout_constraintStart_toEndOf="@+id/text_execution_date"
+        app:layout_constraintTop_toTopOf="@id/text_execution_date" />
+
+    <TextView
+        android:id="@+id/text_cost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_dimen"
+        android:layout_marginTop="@dimen/default_dimen"
+        android:layout_marginEnd="@dimen/default_dimen"
+        android:layout_marginBottom="@dimen/small_dimen"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_small_dimen"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/view_execution_date_cost_separator"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="$ 25" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_dimen"
+        android:layout_marginTop="@dimen/small_dimen"
+        android:layout_marginEnd="@dimen/default_dimen"
+        android:layout_marginBottom="@dimen/small_dimen"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_big_dimen"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_execution_date"
+        tools:text="Car parts and other parts from parts" />
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_dimen"
+        android:layout_marginTop="@dimen/small_dimen"
+        android:layout_marginEnd="@dimen/default_dimen"
+        android:layout_marginBottom="@dimen/default_dimen"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_medium_dimen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:text="What have I dony" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

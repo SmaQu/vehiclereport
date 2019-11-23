@@ -12,15 +12,15 @@ public class Category {
     @NonNull
     private String id;
 
-    @ColumnInfo(name = "edit_timestamp")
-    private long editTimestamp;
+    @ColumnInfo(name = "execution_timestamp")
+    private long executionTimestamp;
 
     @ColumnInfo(name = "amount_of_elements")
     private long amountOfElements;
 
-    public Category(String id, long editTimestamp, long amountOfElements) {
+    public Category(String id, long executionTimestamp, long amountOfElements) {
         this.id = id;
-        this.editTimestamp = editTimestamp;
+        this.executionTimestamp = executionTimestamp;
         this.amountOfElements = amountOfElements;
     }
 
@@ -32,12 +32,12 @@ public class Category {
         this.id = id;
     }
 
-    public long getEditTimestamp() {
-        return editTimestamp;
+    public long getExecutionTimestamp() {
+        return executionTimestamp;
     }
 
-    public void setEditTimestamp(long editTimestamp) {
-        this.editTimestamp = editTimestamp;
+    public void setExecutionTimestamp(long executionTimestamp) {
+        this.executionTimestamp = executionTimestamp;
     }
 
     public long getAmountOfElements() {

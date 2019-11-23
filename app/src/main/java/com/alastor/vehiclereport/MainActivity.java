@@ -1,22 +1,10 @@
 package com.alastor.vehiclereport;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.alastor.vehiclereport.fragment.MainFragment;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
-import com.alastor.vehiclereport.viewmodel.MainFragmentViewModel;
-
-import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         final boolean mainFragmentExisted = FragmentAdministrator
-                .isFragmentVisible(getSupportFragmentManager(),
+                .isFragmentPresent(getSupportFragmentManager(),
+                        R.id.fragment_container,
                         MainFragment.class.getSimpleName());
 
         if (!mainFragmentExisted) {
