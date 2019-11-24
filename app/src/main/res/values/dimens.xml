@@ -2,6 +2,7 @@
 <resources>
     <dimen name="small_dimen">6dp</dimen>
     <dimen name="default_dimen">12dp</dimen>
+    <dimen name="regular_dimen">16dp</dimen>
     <dimen name="medium_dimen">18dp</dimen>
     <dimen name="big_dimen">24dp</dimen>
 

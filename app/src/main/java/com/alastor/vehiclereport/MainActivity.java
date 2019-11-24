@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
                         R.id.fragment_container,
                         MainFragment.class.getSimpleName());
 
-        if (!mainFragmentExisted) {
+        if (savedInstanceState == null) {
             FragmentAdministrator.
                     addFragment(getSupportFragmentManager(),
                             R.id.fragment_container,
