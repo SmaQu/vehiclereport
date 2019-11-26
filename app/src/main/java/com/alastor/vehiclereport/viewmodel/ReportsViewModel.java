@@ -68,32 +68,6 @@ public class ReportsViewModel extends AndroidViewModel {
         return reports;
     }
 
-    public LiveData<Response<Boolean>> insertReport(final Report report) {
-        final Completable completable = reportRepository.insertReport(report);
-
-        completable.subscribeOn(Schedulers.io())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable.add(d);
-                        insertReport.postValue(Response.loading());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        insertReport.postValue(Response.success(true));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        insertReport.postValue(Response.error(e));
-                    }
-                });
-
-
-        return insertReport;
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();

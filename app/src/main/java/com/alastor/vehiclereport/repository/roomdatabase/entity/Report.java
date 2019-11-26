@@ -25,6 +25,14 @@ public class Report {
     @ColumnInfo(name = "category_id")
     private String categoryId;
 
+    public Report() {
+        this.title = "";
+        this.description = "";
+        this.executionTimestamp = System.currentTimeMillis();
+        this.cost = 0f;
+        this.categoryId = Category.CategoryId.BFC.name();
+    }
+
     public long getId() {
         return id;
     }

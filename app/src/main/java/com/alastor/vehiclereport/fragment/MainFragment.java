@@ -8,13 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.CategoryAdapter;
+import com.alastor.vehiclereport.repository.Response;
+import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.viewmodel.MainFragmentViewModel;
+
+import java.util.List;
 
 public class MainFragment extends Fragment {
 
@@ -51,24 +56,27 @@ public class MainFragment extends Fragment {
 
         mMainFragmentViewModel
                 .getCategories()
-                .observe(getViewLifecycleOwner(), listResponse -> {
-                    switch (listResponse.status) {
-                        case LOADING:
+                .observe(getViewLifecycleOwner(), getCategoryObserver());
+    }
 
-                            break;
+    private Observer<Response<List<Category>>> getCategoryObserver() {
+        return listResponse -> {
+            switch (listResponse.status) {
+                case LOADING:
 
-                        case SUCCESS:
-                            if (listResponse.data != null) {
-                                mCategoryAdapter.setCategories(listResponse.data);
-                            }
-                            break;
+                    break;
 
-                        case ERROR:
-
-                            break;
+                case SUCCESS:
+                    if (listResponse.data != null) {
+                        mCategoryAdapter.setCategories(listResponse.data);
                     }
-                });
+                    break;
 
+                case ERROR:
+
+                    break;
+            }
+        };
     }
 
     private CategoryAdapter.OnCategoryListener getCategoryListener() {

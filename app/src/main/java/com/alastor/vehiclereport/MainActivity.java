@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity implements BottomBar {
     }
 
     @Override
-    public void hideBar() {
-        mBottomAppBar.performHide();
+    public void hideFloatingButton() {
         mFloatingActionButton.hide();
     }
 
     @Override
-    public void showBar() {
-        mBottomAppBar.performShow();
+    public void showFloatingButton() {
         mFloatingActionButton.show();
     }
 }

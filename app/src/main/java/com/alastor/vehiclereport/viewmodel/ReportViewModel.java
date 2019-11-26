@@ -9,14 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alastor.vehiclereport.repository.ReportRepository;
 import com.alastor.vehiclereport.repository.Response;
+import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
 
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
@@ -28,8 +27,12 @@ public class ReportViewModel extends AndroidViewModel {
     private CompositeDisposable disposable = new CompositeDisposable();
     private ReportRepository reportRepository;
 
+    //fields
+    private Report currentReport = new Report();
+
     //live-data
     private MutableLiveData<Response<Report>> report = new MutableLiveData<>();
+    private MutableLiveData<Response<Boolean>> insertReport = new MutableLiveData<>();
     private MutableLiveData<Response<Boolean>> updateReport = new MutableLiveData<>();
     private MutableLiveData<Response<Boolean>> deleteReport = new MutableLiveData<>();
 
@@ -38,7 +41,7 @@ public class ReportViewModel extends AndroidViewModel {
         reportRepository = new ReportRepository(application);
     }
 
-    public LiveData<Response<Report>> getReport(long id) {
+     public LiveData<Response<Report>> getReport(long id) {
         final Single<Report> observable = reportRepository.getReport(id);
 
         observable
@@ -52,6 +55,7 @@ public class ReportViewModel extends AndroidViewModel {
 
                     @Override
                     public void onSuccess(Report newReport) {
+                        currentReport = newReport;
                         report.postValue(Response.success(newReport));
                     }
 
@@ -62,6 +66,30 @@ public class ReportViewModel extends AndroidViewModel {
                 });
 
         return report;
+    }
+
+    public LiveData<Response<Boolean>> insertReport(final Report report) {
+        final Completable completable = reportRepository.insertReport(report);
+
+        completable.subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+
+        return insertReport;
     }
 
     public LiveData<Response<Boolean>> updateReport(final Report report) {
@@ -114,6 +142,14 @@ public class ReportViewModel extends AndroidViewModel {
 
 
         return deleteReport;
+    }
+
+    public Report getCurrentReport() {
+        return currentReport;
+    }
+
+    public void setCurrentReport(Report currentReport) {
+        this.currentReport = currentReport;
     }
 
     @Override

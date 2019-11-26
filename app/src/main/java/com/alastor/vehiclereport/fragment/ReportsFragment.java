@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.ReportsAdapter;
+import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
 import com.alastor.vehiclereport.viewmodel.ReportViewModel;
 import com.alastor.vehiclereport.viewmodel.ReportsViewModel;
@@ -56,7 +57,7 @@ public class ReportsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mReportsViewModel
-                .getReports("BFC")
+                .getReports(Category.CategoryId.BFC.name())
                 .observe(getViewLifecycleOwner(), listResponse -> {
                     switch (listResponse.status) {
                         case LOADING:
