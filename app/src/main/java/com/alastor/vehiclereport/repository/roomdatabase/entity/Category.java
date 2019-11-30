@@ -111,37 +111,37 @@ public class Category {
         public String getTranslation(Context context) {
             switch (this) {
                 case BFC:
-                    return "1";
+                    return "BFCC";
                 case BKS:
-                    return "2";
+                    return "BKSS";
                 case CWH:
-                    return "3";
+                    return "CWHS";
                 case CLS:
-                    return "4";
+                    return "CLSS";
                 case DRS:
-                    return "5";
+                    return "DRSS";
                 case ESL:
-                    return "6";
+                    return "ESLS";
                 case EAE:
-                    return "7";
+                    return "EAES";
                 case EAA:
-                    return "8";
+                    return "EAAS";
                 case EXS:
-                    return "9";
+                    return "EXSS";
                 case FIL:
-                    return "10";
+                    return "FILS";
                 case FSP:
-                    return "11";
+                    return "FSPS";
                 case HAC:
-                    return "12";
+                    return "HACS";
                 case IIS:
-                    return "13";
+                    return "IISS";
                 case ITS:
-                    return "14";
+                    return "ITSS";
                 case STS:
-                    return "15";
+                    return "STSS";
                 case SAW:
-                    return "16";
+                    return "SAWS";
             }
             return "";
         }

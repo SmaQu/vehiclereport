@@ -9,10 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alastor.vehiclereport.repository.ReportRepository;
 import com.alastor.vehiclereport.repository.Response;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
-
-import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
@@ -29,6 +26,7 @@ public class ReportViewModel extends AndroidViewModel {
 
     //fields
     private Report currentReport = new Report();
+    private boolean isReportEdit = false;
 
     //live-data
     private MutableLiveData<Response<Report>> report = new MutableLiveData<>();
@@ -41,7 +39,7 @@ public class ReportViewModel extends AndroidViewModel {
         reportRepository = new ReportRepository(application);
     }
 
-     public LiveData<Response<Report>> getReport(long id) {
+    public LiveData<Response<Report>> getReport(long id) {
         final Single<Report> observable = reportRepository.getReport(id);
 
         observable
@@ -56,6 +54,7 @@ public class ReportViewModel extends AndroidViewModel {
                     @Override
                     public void onSuccess(Report newReport) {
                         currentReport = newReport;
+                        isReportEdit = true;
                         report.postValue(Response.success(newReport));
                     }
 
@@ -68,52 +67,35 @@ public class ReportViewModel extends AndroidViewModel {
         return report;
     }
 
-    public LiveData<Response<Boolean>> insertReport(final Report report) {
-        final Completable completable = reportRepository.insertReport(report);
+    public LiveData<Response<Boolean>> insertOrUpdateReport(final Report report) {
+        final Completable insertCompletable = reportRepository.insertReport(report);
+        final Completable updateCompletable = reportRepository.updateReport(report);
 
-        completable.subscribeOn(Schedulers.io())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable.add(d);
-                    }
+        final CompletableObserver completableObserver = new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable.add(d);
+                updateReport.postValue(Response.loading());
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
+                updateReport.postValue(Response.success(true));
+            }
 
-                    }
+            @Override
+            public void onError(Throwable e) {
+                updateReport.postValue(Response.error(e));
+            }
+        };
 
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
-
-        return insertReport;
-    }
-
-    public LiveData<Response<Boolean>> updateReport(final Report report) {
-        final Completable completable = reportRepository.updateReport(report);
-
-        completable.subscribeOn(Schedulers.io())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable.add(d);
-                        updateReport.postValue(Response.loading());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        updateReport.postValue(Response.success(true));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        updateReport.postValue(Response.error(e));
-                    }
-                });
-
+        if (isReportEdit) {
+            updateCompletable.subscribeOn(Schedulers.io())
+                    .subscribe(completableObserver);
+        } else {
+            insertCompletable.subscribeOn(Schedulers.io())
+                    .subscribe(completableObserver);
+        }
 
         return updateReport;
     }

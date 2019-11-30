@@ -23,8 +23,8 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_android_black_24dp"
+        app:backgroundTint="@color/colorAccent"
         app:layout_anchor="@id/bar_bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

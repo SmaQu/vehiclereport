@@ -3,10 +3,10 @@ package com.alastor.vehiclereport.fragment;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
@@ -21,6 +21,7 @@ import com.alastor.vehiclereport.adapter.AutoCompleteCategoryAdapter;
 import com.alastor.vehiclereport.repository.Response;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
+import com.alastor.vehiclereport.view.CategoryAutoCompleteTextView;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.ReportViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -36,9 +37,10 @@ public class ReportFragment extends Fragment {
     private static final String ARG_REPORT_ID = "argReportId";
 
     private ReportViewModel mReportViewModel;
+    private AutoCompleteCategoryAdapter adapter;
 
     //ui
-    private AutoCompleteTextView categoryActv;
+    private CategoryAutoCompleteTextView categoryCactv;
     private TextInputEditText titleTiet;
     private TextInputEditText descriptionTiet;
     private TextInputEditText dateTiet;
@@ -63,15 +65,6 @@ public class ReportFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mReportViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
-
-        if (savedInstanceState != null) {
-            long reportId = savedInstanceState.getLong(ARG_REPORT_ID, -1);
-            if (reportId > 0) {
-                mReportViewModel
-                        .getReport(reportId)
-                        .observe(getViewLifecycleOwner(), getReportObserver());
-            }
-        }
     }
 
     @Nullable
@@ -86,10 +79,18 @@ public class ReportFragment extends Fragment {
         });
 
         saveMbt.setOnClickListener(v -> {
-            if (validViews()) {
-
-            }
+            
         });
+
+        final Bundle bundle = getArguments();
+        if (bundle != null) {
+            long reportId = bundle.getLong(ARG_REPORT_ID, -1);
+            if (reportId > 0) {
+                mReportViewModel
+                        .getReport(reportId)
+                        .observe(getViewLifecycleOwner(), getReportObserver());
+            }
+        }
 
         return view;
     }
@@ -111,11 +112,12 @@ public class ReportFragment extends Fragment {
     }
 
     private void bindView(final View view) {
-        categoryActv = view.findViewById(R.id.category_dropdown);
+        categoryCactv = view.findViewById(R.id.category_dropdown);
         titleTiet = view.findViewById(R.id.tiet_title);
         descriptionTiet = view.findViewById(R.id.tiet_description);
         dateTiet = view.findViewById(R.id.tiet_date);
         costTiet = view.findViewById(R.id.tiet_cost);
+        saveMbt = view.findViewById(R.id.save_button);
         loadingPb = view.findViewById(R.id.progress_loading);
         allViewsScroll = view.findViewById(R.id.scroll_views);
     }
@@ -142,8 +144,8 @@ public class ReportFragment extends Fragment {
     }
 
     private boolean validViews() {
-        if (TextUtils.isEmpty(categoryActv.getText())) {
-            categoryActv.setError("Error");
+        if (TextUtils.isEmpty(categoryCactv.getText())) {
+            categoryCactv.setError("Error");
             return false;
         }
 
@@ -166,19 +168,12 @@ public class ReportFragment extends Fragment {
 
     private void setUpCategories() {
         final Category.CategoryId[] CATEGORIES = Category.CategoryId.values();
-        AutoCompleteCategoryAdapter adapter =
-                new AutoCompleteCategoryAdapter(
-                        requireContext(),
-                        R.layout.item_dropdown_category,
-                        CATEGORIES);
+        adapter = new AutoCompleteCategoryAdapter(
+                requireContext(),
+                R.layout.item_dropdown_category,
+                CATEGORIES);
 
-        categoryActv.setAdapter(adapter);
-        //TODO Fix it later
-//        categoryActv.setOnItemClickListener((parent, view, position, id) -> {
-//            final Category.CategoryId categoryId =
-//                    (Category.CategoryId) parent.getItemAtPosition(position);
-//            categoryActv.setText(categoryId.getTranslation(getContext()));
-//        });
+        categoryCactv.setAdapter(adapter);
     }
 
     private void setUpDate() {
@@ -201,7 +196,7 @@ public class ReportFragment extends Fragment {
                     break;
 
                 case ERROR:
-                    renderErrorState();
+                    renderErrorState(reportResponse.error);
                     break;
             }
         };
