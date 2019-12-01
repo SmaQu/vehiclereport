@@ -37,6 +37,8 @@ public class CategoryAutoCompleteTextView extends AppCompatAutoCompleteTextView 
 
     public void setCategoryId(Category.CategoryId categoryId) {
         this.categoryId = categoryId;
+        String translatedCategory = categoryId.getTranslation(getContext());
+        setText(translatedCategory, false);
     }
 
     public Category.CategoryId getCategoryId() {
