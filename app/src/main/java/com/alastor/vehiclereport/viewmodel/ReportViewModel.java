@@ -67,9 +67,9 @@ public class ReportViewModel extends AndroidViewModel {
         return report;
     }
 
-    public LiveData<Response<Boolean>> insertOrUpdateReport(final Report report) {
-        final Completable insertCompletable = reportRepository.insertReport(report);
-        final Completable updateCompletable = reportRepository.updateReport(report);
+    public LiveData<Response<Boolean>> insertOrUpdateReport() {
+        final Completable insertCompletable = reportRepository.insertReport(currentReport);
+        final Completable updateCompletable = reportRepository.updateReport(currentReport);
 
         final CompletableObserver completableObserver = new CompletableObserver() {
             @Override
@@ -128,10 +128,6 @@ public class ReportViewModel extends AndroidViewModel {
 
     public Report getCurrentReport() {
         return currentReport;
-    }
-
-    public void setCurrentReport(Report currentReport) {
-        this.currentReport = currentReport;
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.alastor.vehiclereport.fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
@@ -16,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.AutoCompleteCategoryAdapter;
 import com.alastor.vehiclereport.repository.Response;
@@ -79,7 +83,20 @@ public class ReportFragment extends Fragment {
         });
 
         saveMbt.setOnClickListener(v -> {
-            
+            if (validReport()) {
+                mReportViewModel
+                        .insertOrUpdateReport()
+                        .observe(getViewLifecycleOwner(), getReportOperationsObserver());
+            }
+            hideSoftKeyboard(view);
+        });
+
+        titleTiet.addTextChangedListener(getTitleTextWatcher());
+        descriptionTiet.addTextChangedListener(getDescriptionTextWatcher());
+        costTiet.addTextChangedListener(getCoastTextWatcher());
+
+        categoryCactv.setOnItemClickListener((parent, view1, position, id) -> {
+            mReportViewModel.getCurrentReport().setCategoryId(categoryCactv.getCategoryId().name());
         });
 
         final Bundle bundle = getArguments();
@@ -106,8 +123,9 @@ public class ReportFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (getContext() != null && getContext() instanceof BottomBar) {
-            ((BottomBar) getContext()).showFloatingButton();
+        final Context context = getContext();
+        if (context instanceof BottomBar) {
+            ((BottomBar) context).showFloatingButton();
         }
     }
 
@@ -143,27 +161,23 @@ public class ReportFragment extends Fragment {
 
     }
 
-    private boolean validViews() {
-        if (TextUtils.isEmpty(categoryCactv.getText())) {
+    private boolean validReport() {
+        boolean valid = true;
+        if (TextUtils.isEmpty(mReportViewModel.getCurrentReport().getCategoryId())) {
             categoryCactv.setError("Error");
-            return false;
+            valid = false;
         }
 
-        if (TextUtils.isEmpty(titleTiet.getText())) {
+        if (TextUtils.isEmpty(mReportViewModel.getCurrentReport().getTitle())) {
             titleTiet.setError("Error");
-            return false;
+            valid = false;
         }
 
-        if (TextUtils.isEmpty(descriptionTiet.getText())) {
+        if (TextUtils.isEmpty(mReportViewModel.getCurrentReport().getDescription())) {
             descriptionTiet.setError("Error2");
-            return false;
+            valid = false;
         }
-
-        if (TextUtils.isEmpty(dateTiet.getText())) {
-            dateTiet.setError("Error3");
-            return false;
-        }
-        return true;
+        return valid;
     }
 
     private void setUpCategories() {
@@ -202,6 +216,91 @@ public class ReportFragment extends Fragment {
         };
     }
 
+    private Observer<Response<Boolean>> getReportOperationsObserver() {
+        return reportResponse -> {
+            switch (reportResponse.status) {
+                case LOADING:
+                    renderLoadingState();
+                    break;
+
+                case SUCCESS:
+                    FragmentAdministrator.popBackStack(getParentFragmentManager());
+                    break;
+
+                case ERROR:
+                    renderErrorState(reportResponse.error);
+                    break;
+            }
+        };
+    }
+
+    private TextWatcher getTitleTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mReportViewModel.getCurrentReport().setTitle(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
+    private TextWatcher getDescriptionTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mReportViewModel.getCurrentReport().setDescription(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
+    private TextWatcher getCoastTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                if (text.endsWith(".") || text.endsWith(",")) {
+                    text = text.replaceAll("[$,.]", "");
+                }
+
+                if (TextUtils.isEmpty(text)) {
+                    text = "0";
+                }
+
+                double cost = Double.valueOf(text);
+                mReportViewModel.getCurrentReport().setCost(cost);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
     private void openDataPicker() {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
@@ -219,6 +318,7 @@ public class ReportFragment extends Fragment {
             mReportViewModel
                     .getCurrentReport()
                     .setExecutionTimestamp(getTimeInMilliseconds(year, month, dayOfMonth));
+            setUpDate();
         };
     }
 
@@ -226,5 +326,10 @@ public class ReportFragment extends Fragment {
         final Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return calendar.getTimeInMillis();
+    }
+
+    private void hideSoftKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

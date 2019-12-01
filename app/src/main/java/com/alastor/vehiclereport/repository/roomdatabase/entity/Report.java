@@ -20,7 +20,7 @@ public class Report {
     @ColumnInfo(name = "execution_timestamp")
     private long executionTimestamp;
 
-    private float cost;
+    private double cost;
 
     @ColumnInfo(name = "category_id")
     private String categoryId;
@@ -30,7 +30,7 @@ public class Report {
         this.description = "";
         this.executionTimestamp = System.currentTimeMillis();
         this.cost = 0f;
-        this.categoryId = Category.CategoryId.BFC.name();
+        this.categoryId = "";
     }
 
     public long getId() {
@@ -65,11 +65,11 @@ public class Report {
         this.executionTimestamp = executionTimestamp;
     }
 
-    public float getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

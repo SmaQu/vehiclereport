@@ -74,11 +74,11 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         void bindView(Report report) {
             mExecutionDate.setText("" + report.getExecutionTimestamp());
 
-            final float cost = report.getCost();
-            if (cost > 0f) {
+            final double cost = report.getCost();
+            if (cost > 0) {
                 mSeparator.setVisibility(View.VISIBLE);
                 mCost.setVisibility(View.VISIBLE);
-                mCost.setText("" + report.getCost());
+                mCost.setText(String.valueOf(cost));
             }
 
             mTitle.setText(report.getTitle());
