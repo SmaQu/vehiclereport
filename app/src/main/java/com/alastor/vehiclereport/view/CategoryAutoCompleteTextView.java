@@ -35,6 +35,10 @@ public class CategoryAutoCompleteTextView extends AppCompatAutoCompleteTextView 
         super.replaceText(translatedCategory);
     }
 
+    public void setCategoryId(Category.CategoryId categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public Category.CategoryId getCategoryId() {
         return categoryId;
     }

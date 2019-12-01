@@ -1,6 +1,9 @@
 package com.alastor.vehiclereport.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.ReportsAdapter;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
-import com.alastor.vehiclereport.viewmodel.ReportViewModel;
+import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.ReportsViewModel;
 
 public class ReportsFragment extends Fragment {
 
     private static final String TAG = ReportsFragment.class.getSimpleName();
+    private static final String ARG_CATEGORY_ID = "argCategoryId";
 
     //fields
     private ReportsViewModel mReportsViewModel;
@@ -31,7 +33,11 @@ public class ReportsFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     public static ReportsFragment create(final String categoryId) {
-        return new ReportsFragment();
+        final ReportsFragment reportsFragment = new ReportsFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putString(ARG_CATEGORY_ID, categoryId);
+        reportsFragment.setArguments(bundle);
+        return reportsFragment;
     }
 
     @Override
@@ -45,10 +51,8 @@ public class ReportsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_reports, container, false);
-
         mRecyclerView = view.findViewById(R.id.recycler_reports);
         mRecyclerView.setAdapter(mReportsAdapter);
-
         return view;
     }
 
@@ -56,8 +60,13 @@ public class ReportsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Bundle bundle = getArguments();
+        if (bundle == null || TextUtils.isEmpty(bundle.getString(ARG_CATEGORY_ID))) {
+            throw new IllegalArgumentException("Arguments can not be null");
+        }
+
         mReportsViewModel
-                .getReports(Category.CategoryId.BFC.name())
+                .getReports(bundle.getString(ARG_CATEGORY_ID))
                 .observe(getViewLifecycleOwner(), listResponse -> {
                     switch (listResponse.status) {
                         case LOADING:
@@ -79,8 +88,8 @@ public class ReportsFragment extends Fragment {
 
     private ReportsAdapter.OnReportListener getReportListener() {
         return reportId -> {
-            FragmentAdministrator.replaceFragment(getParentFragmentManager()
-                    , R.id.fragment_container,
+            FragmentAdministrator.replaceFragment(getParentFragmentManager(),
+                    R.id.fragment_container,
                     ReportFragment.create(reportId),
                     true);
         };

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alastor.vehiclereport.R;
-import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
 
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
     public void setReports(List<Report> freshReports) {
         mReports.clear();
         mReports.addAll(freshReports);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +72,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         }
 
         void bindView(Report report) {
-            mExecutionDate.setText("" + report.getExecutionTimestamp());
+            mExecutionDate.setText(String.valueOf(report.getExecutionTimestamp()));
 
             final double cost = report.getCost();
             if (cost > 0) {
@@ -84,6 +84,9 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
             mTitle.setText(report.getTitle());
             mDescription.setText(report.getDescription());
 
+            itemView.setOnClickListener(v -> {
+                mOnReportListener.onReportClick(report.getId());
+            });
         }
     }
 

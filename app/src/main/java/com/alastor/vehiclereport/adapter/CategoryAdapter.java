@@ -49,6 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void setCategories(List<Category> freshCategories) {
         mCategories.clear();
         mCategories.addAll(freshCategories);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,9 +73,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         void bindView(Category category) {
-            mExecutionDate.setText("" + category.getExecutionTimestamp());
+            mExecutionDate.setText(String.valueOf(category.getExecutionTimestamp()) );
             mCategoryName.setText(category.getId());
-            mAmountElements.setText("" + category.getAmountOfElements());
+            mAmountElements.setText(String.valueOf(category.getAmountOfElements()));
             mCategoryAvatar.setImageDrawable(ContextCompat
                     .getDrawable(
                             itemView.getContext(),

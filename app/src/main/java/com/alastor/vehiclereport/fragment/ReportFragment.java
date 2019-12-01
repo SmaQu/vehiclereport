@@ -188,6 +188,10 @@ public class ReportFragment extends Fragment {
                 CATEGORIES);
 
         categoryCactv.setAdapter(adapter);
+        final String categoryId = mReportViewModel.getCurrentReport().getCategoryId();
+        if (!TextUtils.isEmpty(categoryId)) {
+            categoryCactv.setCategoryId(Category.CategoryId.valueOf(categoryId));
+        }
     }
 
     private void setUpDate() {

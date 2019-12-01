@@ -81,9 +81,9 @@ public class MainFragment extends Fragment {
 
     private CategoryAdapter.OnCategoryListener getCategoryListener() {
         return categoryId -> {
-            FragmentAdministrator.replaceFragment(getParentFragmentManager()
-                    , R.id.fragment_container,
-                    ReportFragment.create(2),
+            FragmentAdministrator.replaceFragment(getParentFragmentManager(),
+                    R.id.fragment_container,
+                    ReportsFragment.create(categoryId),
                     true);
         };
     }
