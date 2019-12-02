@@ -1,8 +1,10 @@
 package com.alastor.vehiclereport.repository.roomdatabase.entity;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -144,6 +146,44 @@ public class Category {
                     return context.getString(R.string.category_saw);
             }
             return "";
+        }
+
+        public Drawable getCategoryIcon(Context context) {
+            switch (this) {
+                case BFC:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_car_door);
+                case BKS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_break);
+                case CWH:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_windshield);
+                case CLS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_radiator);
+                case DRS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_gears);
+                case ESL:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_headlights);
+                case EAE:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_engine);
+                case EAA:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_tools);
+                case EXS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_exhaust);
+                case FIL:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_air_filter);
+                case FSP:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_gas_station);
+                case HAC:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_air_conditioner);
+                case IIS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_spark_plug);
+                case ITS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_starter);
+                case STS:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_steering_wheel);
+                case SAW:
+                    return ContextCompat.getDrawable(context, R.drawable.ic_damper);
+            }
+            return ContextCompat.getDrawable(context, R.drawable.ic_engine);
         }
     }
 }

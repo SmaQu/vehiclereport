@@ -23,7 +23,7 @@ public class AutoCompleteCategoryAdapter extends ArrayAdapter<Category.CategoryI
     public AutoCompleteCategoryAdapter(@NonNull Context context,
                                        int resource,
                                        @NonNull Category.CategoryId[] categories) {
-        super(context, resource,categories);
+        super(context, resource, categories);
         this.categories = categories;
         this.resource = resource;
     }

@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alastor.vehiclereport.DataUtils;
@@ -75,12 +74,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         void bindView(Category category) {
             mExecutionDate.setText(DataUtils.getData(category.getExecutionTimestamp()));
-            mCategoryName.setText(Category.CategoryId.valueOf(category.getId()).getTranslation(itemView.getContext()));
+            mCategoryName.setText(Category.CategoryId.valueOf(category.getId())
+                    .getTranslation(itemView.getContext()));
             mAmountElements.setText(String.valueOf(category.getAmountOfElements()));
-            mCategoryAvatar.setImageDrawable(ContextCompat
-                    .getDrawable(
-                            itemView.getContext(),
-                            R.drawable.ic_launcher_background));
+            mCategoryAvatar.setImageDrawable(Category.CategoryId.valueOf(category.getId())
+                    .getCategoryIcon(itemView.getContext()));
 
             itemView.setOnClickListener(v -> {
                 onCategoryListener.onCategoryClick(category.getId());
