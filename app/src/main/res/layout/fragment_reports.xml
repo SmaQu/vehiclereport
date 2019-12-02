@@ -5,6 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/text_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/regular_dimen"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_medium_dimen"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/regular_dimen"
+        android:layout_marginEnd="@dimen/regular_dimen"
+        android:background="@color/colorAccent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_reports"
         android:layout_width="match_parent"

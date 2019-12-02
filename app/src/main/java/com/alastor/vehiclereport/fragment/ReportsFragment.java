@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.ReportsAdapter;
+import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.ReportsViewModel;
 
@@ -30,6 +32,7 @@ public class ReportsFragment extends Fragment {
 
     //ui
     private RecyclerView mRecyclerView;
+    private TextView mCategoryTitleTv;
 
     public static ReportsFragment create(final String categoryId) {
         final ReportsFragment reportsFragment = new ReportsFragment();
@@ -54,6 +57,7 @@ public class ReportsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_reports, container, false);
+        mCategoryTitleTv = view.findViewById(R.id.text_category);
         mRecyclerView = view.findViewById(R.id.recycler_reports);
         mRecyclerView.setAdapter(mReportsAdapter);
         return view;
@@ -68,8 +72,10 @@ public class ReportsFragment extends Fragment {
             throw new IllegalArgumentException("Arguments can not be null");
         }
 
+        String categoryId = bundle.getString(ARG_CATEGORY_ID);
+        mCategoryTitleTv.setText(Category.CategoryId.valueOf(categoryId).getTranslation(requireContext()));
         mReportsViewModel
-                .getReports(bundle.getString(ARG_CATEGORY_ID))
+                .getReports(categoryId)
                 .observe(getViewLifecycleOwner(), listResponse -> {
                     switch (listResponse.status) {
                         case LOADING:
