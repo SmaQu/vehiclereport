@@ -111,37 +111,37 @@ public class Category {
         public String getTranslation(Context context) {
             switch (this) {
                 case BFC:
-                    return "BFCC";
+                    return context.getString(R.string.category_bfc);
                 case BKS:
-                    return "BKSS";
+                    return context.getString(R.string.category_bks);
                 case CWH:
-                    return "CWHS";
+                    return context.getString(R.string.category_cwh);
                 case CLS:
-                    return "CLSS";
+                    return context.getString(R.string.category_cls);
                 case DRS:
-                    return "DRSS";
+                    return context.getString(R.string.category_drs);
                 case ESL:
-                    return "ESLS";
+                    return context.getString(R.string.category_esl);
                 case EAE:
-                    return "EAES";
+                    return context.getString(R.string.category_eae);
                 case EAA:
-                    return "EAAS";
+                    return context.getString(R.string.category_eaa);
                 case EXS:
-                    return "EXSS";
+                    return context.getString(R.string.category_exs);
                 case FIL:
-                    return "FILS";
+                    return context.getString(R.string.category_fil);
                 case FSP:
-                    return "FSPS";
+                    return context.getString(R.string.category_fsp);
                 case HAC:
-                    return "HACS";
+                    return context.getString(R.string.category_hac);
                 case IIS:
-                    return "IISS";
+                    return context.getString(R.string.category_iis);
                 case ITS:
-                    return "ITSS";
+                    return context.getString(R.string.category_its);
                 case STS:
-                    return "STSS";
+                    return context.getString(R.string.category_sts);
                 case SAW:
-                    return "SAWS";
+                    return context.getString(R.string.category_saw);
             }
             return "";
         }

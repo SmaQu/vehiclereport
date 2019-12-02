@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">vehiclereport</string>
+    <string name="app_name">Vehicle Report</string>
+    <string name="category_bfc">Body, frame and cab</string>
+    <string name="category_bks">Braking system</string>
+    <string name="category_cwh">Cleaning windows and headlights</string>
+    <string name="category_cls">Cooling system</string>
+    <string name="category_drs">Drive system</string>
+    <string name="category_esl">Electrical system and lighting</string>
+    <string name="category_eae">Engine and equipment</string>
+    <string name="category_eaa">Equipment and accessories</string>
+    <string name="category_exs">Exhaust system</string>
+    <string name="category_fil">Filters</string>
+    <string name="category_fsp">Fuel system and power supply</string>
+    <string name="category_hac">Heating and air conditioning</string>
+    <string name="category_iis">Ignition and incandescent system</string>
+    <string name="category_its">Intake system</string>
+    <string name="category_sts">Steering system</string>
+    <string name="category_saw">Suspension and wheels system</string>
+    <string name="action_remove">Remove</string>
+    <string name="label_open">Open drawer</string>
+    <string name="label_close">Close drawer</string>
+    <string name="action_about">About</string>
 </resources>

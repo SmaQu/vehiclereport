@@ -100,8 +100,8 @@ public class ReportViewModel extends AndroidViewModel {
         return updateReport;
     }
 
-    public LiveData<Response<Boolean>> deleteReport(final Report report) {
-        final Completable completable = reportRepository.deleteReport(report);
+    public LiveData<Response<Boolean>> deleteReport(final long reportId) {
+        final Completable completable = reportRepository.deleteReport(reportId);
 
         completable.subscribeOn(Schedulers.io())
                 .subscribe(new CompletableObserver() {

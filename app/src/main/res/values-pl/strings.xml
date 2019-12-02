@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Raport samochodu</string>
+    <string name="category_bfc">Nadwozie, rama i kabina</string>
+    <string name="category_bks">Układ hamulcowy</string>
+    <string name="category_cwh">Czyszczenie szyb i reflektorów</string>
+    <string name="category_cls">Układ chłodzenia</string>
+    <string name="category_drs">Układ napędowy</string>
+    <string name="category_esl">Układ elektryczny i oświetlenie</string>
+    <string name="category_eae">Silnik i osprzęt</string>
+    <string name="category_eaa">Wyposażenie i akcesoria</string>
+    <string name="category_exs">Układ wydechowy</string>
+    <string name="category_fil">Filtry</string>
+    <string name="category_fsp">Układ paliwowy i zasilania</string>
+    <string name="category_hac">Ogrzewanie i klimatyzacja</string>
+    <string name="category_iis">Układ zapłonowy i żarowy</string>
+    <string name="category_its">Układ dolotowy</string>
+    <string name="category_sts">Układ kierowniczy</string>
+    <string name="category_saw">Zawieszenie i koła</string>
+</resources>

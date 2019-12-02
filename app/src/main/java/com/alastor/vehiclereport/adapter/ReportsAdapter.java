@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alastor.vehiclereport.DataUtils;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Report;
 
@@ -72,7 +73,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
         }
 
         void bindView(Report report) {
-            mExecutionDate.setText(String.valueOf(report.getExecutionTimestamp()));
+            mExecutionDate.setText(DataUtils.getData(report.getExecutionTimestamp()));
 
             final double cost = report.getCost();
             if (cost > 0) {

@@ -1,5 +1,6 @@
 package com.alastor.vehiclereport.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.CategoryAdapter;
 import com.alastor.vehiclereport.repository.Response;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
+import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.MainFragmentViewModel;
 
 import java.util.List;
@@ -35,6 +37,11 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Context context = getContext();
+        if (context instanceof BottomBar) {
+            ((BottomBar) context).showBottomAppBar();
+        }
+
         mCategoryAdapter = new CategoryAdapter(getCategoryListener());
         mMainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
     }

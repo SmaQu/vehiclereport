@@ -8,6 +8,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alastor.vehiclereport.DataUtils;
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.AutoCompleteCategoryAdapter;
@@ -32,9 +36,7 @@ import com.alastor.vehiclereport.viewmodel.ReportViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class ReportFragment extends Fragment {
 
@@ -104,6 +106,7 @@ public class ReportFragment extends Fragment {
         if (bundle != null) {
             long reportId = bundle.getLong(ARG_REPORT_ID, -1);
             if (reportId > 0) {
+                setHasOptionsMenu(true);
                 mReportViewModel
                         .getReport(reportId)
                         .observe(getViewLifecycleOwner(), getReportObserver());
@@ -128,6 +131,23 @@ public class ReportFragment extends Fragment {
         if (context instanceof BottomBar) {
             ((BottomBar) context).showFloatingButton();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_bottomappbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.app_bar_remove) {
+            final long reportId = mReportViewModel.getCurrentReport().getId();
+            mReportViewModel
+                    .deleteReport(reportId)
+                    .observe(getViewLifecycleOwner(), getReportOperationsObserver());
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void bindView(final View view) {
@@ -196,11 +216,11 @@ public class ReportFragment extends Fragment {
     }
 
     private void setUpDate() {
-        final SimpleDateFormat formatter =
-                new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(mReportViewModel.getCurrentReport().getExecutionTimestamp());
-        dateTiet.setText(formatter.format(calendar.getTime()));
+        final String displayDate = DataUtils.getData(
+                mReportViewModel
+                        .getCurrentReport()
+                        .getExecutionTimestamp());
+        dateTiet.setText(displayDate);
     }
 
     private Observer<Response<Report>> getReportObserver() {

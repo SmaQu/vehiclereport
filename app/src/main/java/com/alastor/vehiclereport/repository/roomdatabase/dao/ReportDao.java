@@ -1,7 +1,6 @@
 package com.alastor.vehiclereport.repository.roomdatabase.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -29,6 +28,6 @@ public interface ReportDao {
     @Update
     Completable updateReport(Report report);
 
-    @Delete
-    Completable deleteReport(Report report);
+    @Query("DELETE FROM Report WHERE id = :reportId")
+    Completable deleteReport(long reportId);
 }

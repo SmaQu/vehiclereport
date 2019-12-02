@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alastor.vehiclereport.DataUtils;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 
@@ -73,8 +74,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         void bindView(Category category) {
-            mExecutionDate.setText(String.valueOf(category.getExecutionTimestamp()) );
-            mCategoryName.setText(category.getId());
+            mExecutionDate.setText(DataUtils.getData(category.getExecutionTimestamp()));
+            mCategoryName.setText(Category.CategoryId.valueOf(category.getId()).getTranslation(itemView.getContext()));
             mAmountElements.setText(String.valueOf(category.getAmountOfElements()));
             mCategoryAvatar.setImageDrawable(ContextCompat
                     .getDrawable(

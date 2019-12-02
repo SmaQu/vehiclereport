@@ -38,7 +38,7 @@ public class ReportRepository {
         return reportDao.updateReport(report);
     }
 
-    public Completable deleteReport(Report report) {
-        return reportDao.deleteReport(report);
+    public Completable deleteReport(long reportId) {
+        return reportDao.deleteReport(reportId);
     }
 }

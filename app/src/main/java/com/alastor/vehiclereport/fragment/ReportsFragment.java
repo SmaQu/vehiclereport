@@ -3,7 +3,6 @@ package com.alastor.vehiclereport.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +42,10 @@ public class ReportsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Context context = getContext();
+        if (context instanceof BottomBar) {
+            ((BottomBar) context).showBottomAppBar();
+        }
         mReportsAdapter = new ReportsAdapter(getReportListener());
         mReportsViewModel = new ViewModelProvider(this).get(ReportsViewModel.class);
     }
