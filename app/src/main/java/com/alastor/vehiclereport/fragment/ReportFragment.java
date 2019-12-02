@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +33,7 @@ import com.alastor.vehiclereport.view.CategoryAutoCompleteTextView;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.ReportViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -142,10 +142,17 @@ public class ReportFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.app_bar_remove) {
-            final long reportId = mReportViewModel.getCurrentReport().getId();
-            mReportViewModel
-                    .deleteReport(reportId)
-                    .observe(getViewLifecycleOwner(), getReportOperationsObserver());
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.label_remove_report)
+                    .setMessage(R.string.prompt_remove_report_checker)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        final long reportId = mReportViewModel.getCurrentReport().getId();
+                        mReportViewModel
+                                .deleteReport(reportId)
+                                .observe(getViewLifecycleOwner(), getReportOperationsObserver());
+                    })
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -20,4 +20,6 @@
     <string name="label_open">Open drawer</string>
     <string name="label_close">Close drawer</string>
     <string name="action_about">About</string>
+    <string name="label_remove_report">Remove report</string>
+    <string name="prompt_remove_report_checker">Are you sure You want to remove this report?</string>
 </resources>
