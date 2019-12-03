@@ -52,6 +52,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void updateOrAddCategory(Category category) {
+        mCategories.remove(category);
+        mCategories.add(category);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mExecutionDate;
@@ -73,7 +79,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         void bindView(Category category) {
-            mExecutionDate.setText(DataUtils.getData(category.getExecutionTimestamp()));
+            if (category.getExecutionTimestamp() == 0) {
+                mExecutionDate.setText("--/--/----");
+            } else {
+                mExecutionDate.setText(DataUtils.getData(category.getExecutionTimestamp()));
+            }
             mCategoryName.setText(Category.CategoryId.valueOf(category.getId())
                     .getTranslation(itemView.getContext()));
             mAmountElements.setText(String.valueOf(category.getAmountOfElements()));

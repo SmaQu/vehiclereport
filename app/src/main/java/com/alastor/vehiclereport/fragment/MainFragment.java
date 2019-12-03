@@ -2,6 +2,7 @@ package com.alastor.vehiclereport.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alastor.vehiclereport.FragmentAdministrator;
 import com.alastor.vehiclereport.R;
 import com.alastor.vehiclereport.adapter.CategoryAdapter;
-import com.alastor.vehiclereport.repository.Response;
+import com.alastor.vehiclereport.repository.CategoryIntent;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.MainFragmentViewModel;
@@ -66,21 +67,28 @@ public class MainFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), getCategoryObserver());
     }
 
-    private Observer<Response<List<Category>>> getCategoryObserver() {
-        return listResponse -> {
-            switch (listResponse.status) {
+    private Observer<CategoryIntent<List<Category>, Category>> getCategoryObserver() {
+        return categoryIntent -> {
+            switch (categoryIntent.status) {
                 case LOADING:
-
                     break;
-
-                case SUCCESS:
-                    if (listResponse.data != null) {
-                        mCategoryAdapter.setCategories(listResponse.data);
+                case MAIN_PART:
+                    for (Category category :categoryIntent.mainData) {
+                        Log.e(TAG, "getCategoryObserver: " + category.getId() + ","
+                                +  category.getExecutionTimestamp() + ","
+                                +category.getAmountOfElements());
                     }
+                    mCategoryAdapter.setCategories(categoryIntent.mainData);
                     break;
-
+                case ON_NEXT_PART:
+                    Log.e(TAG, "getCategoryObserver: " + categoryIntent.nextData.getId() + ","
+                            +  categoryIntent.nextData.getExecutionTimestamp() + ","
+                            +categoryIntent.nextData.getAmountOfElements());
+                    mCategoryAdapter.updateOrAddCategory(categoryIntent.nextData);
+                    break;
+                case COMPLETE:
+                    break;
                 case ERROR:
-
                     break;
             }
         };

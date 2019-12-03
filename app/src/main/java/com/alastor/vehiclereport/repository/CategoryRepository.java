@@ -23,4 +23,12 @@ public class CategoryRepository {
     public Observable<List<Category>> getCategory() {
         return categoryDao.getCategories();
     }
+
+    public Observable<Integer> getCategoryItemsCount(String categoryId) {
+        return categoryDao.getCategoryItemCount(categoryId);
+    }
+
+    public Observable<Long> getCategoryItemExecutionTimestamp(String categoryId) {
+        return categoryDao.getCategoryItemExecutionTimestamp(categoryId);
+    }
 }
