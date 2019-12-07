@@ -28,4 +28,7 @@
     <string name="label_description">Description</string>
     <string name="label_title">Title</string>
     <string name="label_category">Category</string>
+    <string name="label_more">More</string>
+    <string name="action_your_vehicle">Your vehicle</string>
+    <string name="label_vehicles">Vehicles</string>
 </resources>

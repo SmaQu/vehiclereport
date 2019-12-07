@@ -1,7 +1,6 @@
 package com.alastor.vehiclereport;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.alastor.vehiclereport.fragment.AboutFragment;
 import com.alastor.vehiclereport.fragment.MainFragment;
 import com.alastor.vehiclereport.fragment.ReportFragment;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements BottomBar, Naviga
             FragmentAdministrator.
                     addFragment(getSupportFragmentManager(),
                             R.id.fragment_container,
-                            new MainFragment());
+                            MainFragment.create());
         }
     }
 
@@ -71,7 +71,18 @@ public class MainActivity extends AppCompatActivity implements BottomBar, Naviga
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.e(TAG, "onNavigationItemSelected: ");
+        switch (item.getItemId()) {
+            case R.id.navigation_about:
+                FragmentAdministrator.replaceFragment(
+                        getSupportFragmentManager(),
+                        R.id.fragment_container,
+                        AboutFragment.create(),
+                        true);
+                break;
+            case R.id.navigation_car:
+                FragmentAdministrator.popAllBackStackEntries(getSupportFragmentManager());
+                break;
+        }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }

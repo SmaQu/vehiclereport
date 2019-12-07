@@ -56,7 +56,7 @@ public class FragmentAdministrator {
         fragmentManager.popBackStack();
     }
 
-    private static void popAllBackStackEntries(final FragmentManager fragmentManager) {
+    public static void popAllBackStackEntries(final FragmentManager fragmentManager) {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }

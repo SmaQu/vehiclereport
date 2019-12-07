@@ -35,6 +35,10 @@ public class MainFragment extends Fragment {
     //ui
     private RecyclerView mRecyclerView;
 
+    public static MainFragment create() {
+        return new MainFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
