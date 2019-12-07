@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.alastor.vehiclereport.repository.CategoryIntent;
 import com.alastor.vehiclereport.repository.roomdatabase.entity.Category;
 import com.alastor.vehiclereport.viewmodel.BottomBar;
 import com.alastor.vehiclereport.viewmodel.MainFragmentViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -43,10 +45,6 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = getContext();
-        if (context instanceof BottomBar) {
-            ((BottomBar) context).showBottomAppBar();
-        }
-
         mCategoryAdapter = new CategoryAdapter(getCategoryListener());
         mMainFragmentViewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
     }
@@ -71,28 +69,30 @@ public class MainFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), getCategoryObserver());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        final Context context = getContext();
+        if (context instanceof BottomBar) {
+            ((BottomBar) context).showBottomAppBar();
+        }
+    }
+
     private Observer<CategoryIntent<List<Category>, Category>> getCategoryObserver() {
         return categoryIntent -> {
             switch (categoryIntent.status) {
                 case LOADING:
                     break;
                 case MAIN_PART:
-                    for (Category category :categoryIntent.mainData) {
-                        Log.e(TAG, "getCategoryObserver: " + category.getId() + ","
-                                +  category.getExecutionTimestamp() + ","
-                                +category.getAmountOfElements());
-                    }
                     mCategoryAdapter.setCategories(categoryIntent.mainData);
                     break;
                 case ON_NEXT_PART:
-                    Log.e(TAG, "getCategoryObserver: " + categoryIntent.nextData.getId() + ","
-                            +  categoryIntent.nextData.getExecutionTimestamp() + ","
-                            +categoryIntent.nextData.getAmountOfElements());
                     mCategoryAdapter.updateOrAddCategory(categoryIntent.nextData);
                     break;
                 case COMPLETE:
                     break;
                 case ERROR:
+                    Toast.makeText(requireContext(), R.string.error_category_unreachable, Toast.LENGTH_SHORT).show();
                     break;
             }
         };

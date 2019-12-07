@@ -17,4 +17,21 @@
     <string name="category_its">Układ dolotowy</string>
     <string name="category_sts">Układ kierowniczy</string>
     <string name="category_saw">Zawieszenie i koła</string>
+    <string name="action_remove">Usuń</string>
+    <string name="label_open">Otwórz menu nawigacji</string>
+    <string name="label_close">Zamknij menu nawigacji</string>
+    <string name="action_about">O aplikacji</string>
+    <string name="label_remove_report">Usuń raport</string>
+    <string name="prompt_remove_report_checker">Czy jesteś pewny, że chcesz usunąć ten raport?</string>
+    <string name="label_save">Zapisz</string>
+    <string name="label_cost">Koszt</string>
+    <string name="label_date">Data</string>
+    <string name="label_description">Opis</string>
+    <string name="label_title">Tytłu</string>
+    <string name="label_category">Categoria</string>
+    <string name="label_more">Więcej</string>
+    <string name="action_your_vehicle">Twój pojazd</string>
+    <string name="label_vehicles">Pojazdy</string>
+    <string name="error_category_unreachable">Kategorie są niedostępne</string>
+    <string name="error_reports_unreachable">Raporty są niedostępne</string>
 </resources>

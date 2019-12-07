@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,10 +46,6 @@ public class ReportsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Context context = getContext();
-        if (context instanceof BottomBar) {
-            ((BottomBar) context).showBottomAppBar();
-        }
         mReportsAdapter = new ReportsAdapter(getReportListener());
         mReportsViewModel = new ViewModelProvider(this).get(ReportsViewModel.class);
     }
@@ -79,20 +76,24 @@ public class ReportsFragment extends Fragment {
                 .observe(getViewLifecycleOwner(), listResponse -> {
                     switch (listResponse.status) {
                         case LOADING:
-
                             break;
-
                         case SUCCESS:
-                            if (listResponse.data != null) {
-                                mReportsAdapter.setReports(listResponse.data);
-                            }
+                            mReportsAdapter.setReports(listResponse.data);
                             break;
-
                         case ERROR:
-
+                            Toast.makeText(requireContext(), R.string.error_reports_unreachable, Toast.LENGTH_SHORT).show();
                             break;
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final Context context = getContext();
+        if (context instanceof BottomBar) {
+            ((BottomBar) context).showBottomAppBar();
+        }
     }
 
     private ReportsAdapter.OnReportListener getReportListener() {

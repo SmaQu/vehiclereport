@@ -31,4 +31,6 @@
     <string name="label_more">More</string>
     <string name="action_your_vehicle">Your vehicle</string>
     <string name="label_vehicles">Vehicles</string>
+    <string name="error_category_unreachable">Categories are unreachable</string>
+    <string name="error_reports_unreachable">Reports are unreachable</string>
 </resources>
